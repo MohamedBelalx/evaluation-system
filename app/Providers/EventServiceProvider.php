@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\PostEvent;
+use App\Events\TaskEvent;
+use App\Listeners\NotifyUserForPost;
+use App\Listeners\NotifyUserForTask;
+use App\Notification;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -17,6 +22,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        TaskEvent::class => [
+            NotifyUserForTask::class,
+        ],
+        PostEvent::class => [
+            NotifyUserForPost::class,
         ],
     ];
 
